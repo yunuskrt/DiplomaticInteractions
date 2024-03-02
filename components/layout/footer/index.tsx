@@ -1,19 +1,11 @@
 import React from 'react'
-import {
-	Container,
-	Divider,
-	Grid,
-	Header,
-	Icon,
-	Segment,
-} from 'semantic-ui-react'
+import { Container, Grid, Header, Icon, Segment } from 'semantic-ui-react'
 
 type Props = {}
 const Footer = (props: Props) => {
 	return (
 		<Segment vertical inverted>
 			<Container textAlign='center'>
-				<Divider inverted section />
 				<Grid divided inverted stackable>
 					<Grid.Row>
 						<Grid.Column width={8}>

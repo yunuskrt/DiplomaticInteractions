@@ -7,7 +7,7 @@ type Props = {
 	toggleSidebar: () => void
 }
 
-const Headerx = (props: Props) => {
+const Header = (props: Props) => {
 	return (
 		<Menu secondary className={styles.navbar}>
 			<Button
@@ -25,4 +25,4 @@ const Headerx = (props: Props) => {
 	)
 }
 
-export default Headerx
+export default Header

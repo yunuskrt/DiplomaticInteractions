@@ -1,4 +1,5 @@
 import React, { ReactNode, useState } from 'react'
+import { useRouter } from 'next/router'
 import Header from '@components/layout/header'
 import Footer from '@components/layout/footer'
 import Content from '@components/layout/content'
@@ -18,6 +19,9 @@ type Props = {
 const Layout = ({ app }: Props) => {
 	const [visible, setVisible] = useState(false)
 	const toggleSidebar = () => setVisible(!visible)
+	const router = useRouter()
+	const isActiveItem = (href: string) => router.pathname.split('/')[1] == href
+
 	return (
 		<SidebarPushable>
 			<Sidebar
@@ -29,16 +33,21 @@ const Layout = ({ app }: Props) => {
 				vertical
 				visible={visible}
 				width='wide'
+				style={{ backgroundColor: '#031219' }}
 			>
-				<MenuItem as='a' href='/'>
+				<MenuItem as='a' href='/' active={isActiveItem('')}>
 					<Icon name='home' />
 					Home
 				</MenuItem>
-				<MenuItem as='a' href='/interaction'>
+				<MenuItem
+					as='a'
+					href='/interaction'
+					active={isActiveItem('interaction')}
+				>
 					<Icon name='world' />
 					Country Interaction
 				</MenuItem>
-				<MenuItem as='a' href='/team'>
+				<MenuItem as='a' href='/team' active={isActiveItem('team')}>
 					<Icon name='users' />
 					Our Team
 				</MenuItem>
