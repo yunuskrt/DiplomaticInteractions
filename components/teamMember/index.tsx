@@ -1,21 +1,15 @@
 import React from 'react'
+import { Image, Label } from 'semantic-ui-react'
+import Member from 'types/team'
 import styles from './teamMember.module.css'
 
-import { Image, Label } from 'semantic-ui-react'
-
-type Props = {
-	imageUrl: string
-	name: string
-	title: string
-}
-
-const TeamMember = (props: Props) => {
+const TeamMember = (member: Member) => {
 	return (
 		<div className={styles.memberContainer}>
-			<Image src={props.imageUrl} size='small' circular />
-			<div className={styles.memberName}>{props.name}</div>
+			<Image src={member.imageUrl} size='small' circular />
+			<div className={styles.memberName}>{member.name}</div>
 			<Label color='blue' size='large'>
-				{props.title}
+				{member.title}
 			</Label>
 		</div>
 	)

@@ -1,0 +1,57 @@
+[
+    {
+        "country": "Turkey",
+        "abbr": "TR",
+        "scores": {
+            "Turkey": 80,
+            "United States": 70,
+            "United Kingdom": 60,
+            "France": 50,
+            "Germany": 40
+        }
+    },
+    {
+        "country": "United States",
+        "abbr": "US",
+        "scores": {
+            "Turkey": 70,
+            "United States": 80,
+            "United Kingdom": 70,
+            "France": 60,
+            "Germany": 50
+        }
+    },
+    {
+        "country": "United Kingdom",
+        "abbr": "UK",
+        "scores": {
+            "Turkey": 60,
+            "United States": 70,
+            "United Kingdom": 80,
+            "France": 70,
+            "Germany": 60
+        }
+    },
+    {
+        "country": "France",
+        "abbr": "FR",
+        "scores": {
+            "Turkey": 50,
+            "United States": 60,
+            "United Kingdom": 70,
+            "France": 80,
+            "Germany": 70
+        }
+    },
+    {
+        "country": "Germany",
+        "abbr": "DE",
+        "scores": {
+            "Turkey": 40,
+            "United States": 50,
+            "United Kingdom": 60,
+            "France": 70,
+            "Germany": 80
+        }
+    }
+]

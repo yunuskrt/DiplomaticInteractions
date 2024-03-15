@@ -47,6 +47,14 @@ const Layout = ({ app }: Props) => {
 					<Icon name='world' />
 					Country Interaction
 				</MenuItem>
+				<MenuItem
+					as='a'
+					href='/publications'
+					active={isActiveItem('publications')}
+				>
+					<Icon name='newspaper' />
+					Publications
+				</MenuItem>
 				<MenuItem as='a' href='/team' active={isActiveItem('team')}>
 					<Icon name='users' />
 					Our Team
