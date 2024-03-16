@@ -6,4 +6,10 @@ type Interaction = {
 	}
 }
 
+export type Flag = {
+	fontSize ?: number
+	name : string
+	countryCode ?: string
+}
+
 export default Interaction

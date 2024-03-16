@@ -4,6 +4,7 @@ import { Grid, GridColumn } from 'semantic-ui-react'
 import Interaction from 'types/country'
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
 import { promises as fs } from 'fs'
+import styles from './interaction.module.css'
 
 export const getServerSideProps = (async () => {
 	// Fetch data from external APIs
@@ -17,7 +18,7 @@ const Interaction = ({
 	data,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 	return (
-		<div>
+		<div className={styles.gridCardContainer}>
 			<Grid>
 				{data.map((interaction) => {
 					return (

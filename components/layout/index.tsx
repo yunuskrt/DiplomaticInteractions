@@ -11,6 +11,7 @@ import {
 	Icon,
 	Sidebar,
 } from 'semantic-ui-react'
+import styles from './layout.module.css'
 
 type Props = {
 	app: ReactNode
@@ -33,7 +34,7 @@ const Layout = ({ app }: Props) => {
 				vertical
 				visible={visible}
 				width='wide'
-				style={{ backgroundColor: '#031219' }}
+				className={styles.sidebarContainer}
 			>
 				<MenuItem as='a' href='/' active={isActiveItem('')}>
 					<Icon name='home' />

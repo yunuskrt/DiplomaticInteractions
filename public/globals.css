@@ -1,11 +1,9 @@
-*{
-    color: #fff !important;
-}
-
 body{
-    background: url('./images/background_dark.jpg')!important;
+    background: url('./images/background.png')!important;
     background-size: cover !important;
     background-attachment: fixed !important;
     background-repeat: no-repeat !important;
-    background-color: rgba(255, 255, 255, 1) !important;
+}
+.ui.card>.content>.header{
+    color: #fff !important;
 }

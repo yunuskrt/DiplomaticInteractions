@@ -1,52 +1,32 @@
 import React from 'react'
 import { CardContent, Card, Button } from 'semantic-ui-react'
-import ReactCountryFlag from 'react-country-flag'
+import CountryFlag from '@components/countryFlag'
 
 import Interaction from 'types/country'
 
+import styles from './countryCard.module.css'
+
 const CountryCard = (interaction: Interaction) => {
 	return (
-		<Card style={{ backgroundColor: '#031219' }}>
+		<Card className={styles.countryCard}>
 			<CardContent
 				header={interaction.country}
-				style={{ display: 'flex', justifyContent: 'center', fontSize: '20px' }}
+				className={styles.countryCardHeader}
 			/>
 			<CardContent
 				description={
-					<ReactCountryFlag
-						svg
+					<CountryFlag
+						fontSize={200}
+						name={interaction.country}
 						countryCode={interaction.abbr}
-						style={{
-							fontSize: '160px',
-						}}
-						aria-label='United States'
 					/>
 				}
-				style={{
-					display: 'flex',
-					justifyContent: 'center',
-					marginRight: '5px',
-				}}
+				className={styles.countryCardContent}
 			/>
-			<CardContent
-				extra
-				style={{
-					display: 'flex',
-					justifyContent: 'center',
-					marginRight: '5px',
-				}}
-			>
+			<CardContent extra className={styles.countryCardContent}>
 				<Button
 					color='teal'
-					style={{
-						width: '100%',
-						height: '50px',
-						display: 'flex',
-						alignItems: 'center',
-						justifyContent: 'center',
-						fontSize: '16px',
-						marginLeft: '10px',
-					}}
+					className={styles.visitPageBtn}
 					as='a'
 					href={`/interaction/${interaction.abbr.toLowerCase()}`}
 				>
