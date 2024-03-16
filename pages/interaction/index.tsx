@@ -22,7 +22,12 @@ const Interaction = ({
 			<Grid>
 				{data.map((interaction) => {
 					return (
-						<GridColumn mobile={16} tablet={8} computer={4}>
+						<GridColumn
+							mobile={16}
+							tablet={8}
+							computer={4}
+							key={interaction.country}
+						>
 							<CountryCard {...interaction} />
 						</GridColumn>
 					)

@@ -32,7 +32,7 @@ const TableInteraction = (interaction: Interaction) => {
 				<TableBody>
 					{Object.entries(interaction.scores).map(([country, score]) => {
 						return (
-							<TableRow>
+							<TableRow key={country}>
 								<TableCell>
 									<div className={styles.rowCountryContainer}>
 										<CountryFlag fontSize={40} name={country} />
