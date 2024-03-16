@@ -1,7 +1,7 @@
 import React from 'react'
 import CountryCard from '@components/countryCard'
 import { Grid, GridColumn } from 'semantic-ui-react'
-import Interaction from 'types/country'
+import type Interaction from 'types/country'
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
 import { promises as fs } from 'fs'
 import styles from './interaction.module.css'

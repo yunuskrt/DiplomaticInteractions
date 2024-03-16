@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Interaction from 'types/country'
+import type Interaction from 'types/country'
 import type {
 	InferGetServerSidePropsType,
 	GetServerSideProps,

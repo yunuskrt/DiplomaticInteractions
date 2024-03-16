@@ -1,6 +1,6 @@
 import React from 'react'
 import { Image, Label } from 'semantic-ui-react'
-import Member from 'types/team'
+import type Member from 'types/team'
 import styles from './teamMember.module.css'
 
 const TeamMember = (member: Member) => {

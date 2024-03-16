@@ -11,7 +11,7 @@ import {
 	Statistic,
 } from 'semantic-ui-react'
 import CountryFlag from '@components/countryFlag'
-import Interaction from 'types/country'
+import type Interaction from 'types/country'
 import styles from './tableInteraction.module.css'
 
 const TableInteraction = (interaction: Interaction) => {

@@ -2,7 +2,7 @@ import React from 'react'
 import { CardContent, Card, Button } from 'semantic-ui-react'
 import CountryFlag from '@components/countryFlag'
 
-import Interaction from 'types/country'
+import type Interaction from 'types/country'
 
 import styles from './countryCard.module.css'
 

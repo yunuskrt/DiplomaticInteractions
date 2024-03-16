@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactCountryFlag from 'react-country-flag'
 
-import { Flag } from 'types/country'
+import type { Flag } from 'types/country'
 const countries = [
 	{
 		name: 'Afghanistan',
