@@ -41,6 +41,14 @@ const Layout = ({ app }) => {
 				</MenuItem>
 				<MenuItem
 					as='a'
+					href='/interactions'
+					active={isActiveItem('interactions')}
+				>
+					<Icon name='exchange' />
+					Interactions
+				</MenuItem>
+				<MenuItem
+					as='a'
 					href='/publications'
 					active={isActiveItem('publications')}
 				>
