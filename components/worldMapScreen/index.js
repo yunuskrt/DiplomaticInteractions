@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import WorldMapSvg from '@components/worldMapSvg'
+import InteractionCartography from '@components/interactionCartography'
 import CountryDataModal from '@components/countryDataModal'
 import CountryFlag from '@components/countryFlag'
 import styles from './worldMapScreen.module.css'
@@ -20,77 +20,7 @@ import {
 } from 'semantic-ui-react'
 import InteractionNetwork from '@components/interactionNetwork'
 
-const WorldMapScreen = ({ onScroll }) => {
-	// const graph = {
-	// 	nodes: [
-	// 		{
-	// 			id: 'AB',
-	// 			label: 'Node AB',
-	// 			title: 'node AB tooltip text',
-	// 			shape: 'circle',
-	// 		},
-	// 		{
-	// 			id: 'BC',
-	// 			label: 'Node BC',
-	// 			title: 'node BC tooltip text',
-	// 			shape: 'circle',
-	// 		},
-	// 		{
-	// 			id: 'CD',
-	// 			label: 'Node CD',
-	// 			title: 'node CD tooltip text',
-	// 			shape: 'circle',
-	// 		},
-	// 		{
-	// 			id: 'DE',
-	// 			label: 'Node DE',
-	// 			title: 'node DE tooltip text',
-	// 			shape: 'circle',
-	// 		},
-	// 		{
-	// 			id: 'EF',
-	// 			label: 'Node EF',
-	// 			title: 'node EF tooltip text',
-	// 			shape: 'circle',
-	// 		},
-	// 		{
-	// 			id: 'FG',
-	// 			label: 'Node FG',
-	// 			title: 'node FG tooltip text',
-	// 			shape: 'circle',
-	// 		},
-	// 		{
-	// 			id: 'GH',
-	// 			label: 'Node GH',
-	// 			title: 'node GH tooltip text',
-	// 			shape: 'circle',
-	// 		},
-	// 		{
-	// 			id: 'HI',
-	// 			label: 'Node HI',
-	// 			title: 'node HI tooltip text',
-	// 			shape: 'circle',
-	// 		},
-	// 		{
-	// 			id: 'JK',
-	// 			label: 'Node JK',
-	// 			title: 'node JK tooltip text',
-	// 			shape: 'circle',
-	// 		},
-	// 	],
-	// 	edges: [
-	// 		{ from: 'AB', to: 'GH' },
-	// 		{ from: 'AB', to: 'CD' },
-	// 		{ from: 'FG', to: 'EF' },
-	// 		{ from: 'FG', to: 'BC' },
-	// 		{ from: 'GH', to: 'BC' },
-	// 		{ from: 'FG', to: 'GH' },
-	// 		{ from: 'FG', to: 'HI' },
-	// 		{ from: 'GH', to: 'HI' },
-	// 		{ from: 'HI', to: 'BC' },
-	// 		{ from: 'CD', to: 'GH' },
-	// 	],
-	// }
+const WorldMapScreen = () => {
 	const [display, setDisplay] = useState('cartography')
 	const [visible, setVisible] = useState(false)
 	const [filters, setFilters] = useState({
@@ -109,241 +39,228 @@ const WorldMapScreen = ({ onScroll }) => {
 	const [country, setCountry] = useState('')
 	const [modalOpen, setModalOpen] = useState(false)
 
-	const [colors, setColors] = useState(null)
-	const [graph, setGraph] = useState(null)
+	const [filteredData, setFilteredData] = useState(null)
+
 	const [loading, setLoading] = useState(true)
 
 	const [originalData, setOriginalData] = useState(null)
 
-	const countryList = [
-		'albania',
-		'algeria',
-		'americanSamoa',
-		'angola',
-		'anguilla',
-		'antiguaAndBarbuda',
-		'argentina',
-		'armenia',
-		'aruba',
-		'australia',
-		'austria',
-		'azerbaijan',
-		'bahamas',
-		'bahrain',
-		'bangladesh',
-		'barbados',
-		'belarus',
-		'belgium',
-		'belize',
-		'benin',
-		'bermuda',
-		'bhutan',
-		'bolivia',
-		'bosniaAndHerzegovina',
-		'botswana',
-		'brazil',
-		'britishVirginIslands',
-		'bruneiDarussalam',
-		'bulgaria',
-		'burkinaFaso',
-		'burundi',
-		'cambodia',
-		'cameroon',
-		'canada',
-		'canaryIslandsSpain',
-		'capeVerde',
-		'caymanIslands',
-		'centralAfricanRepublic',
-		'chad',
-		'chile',
-		'china',
-		'colombia',
-		'comoros',
-		'congo',
-		'costaRica',
-		'coteDIvoire',
-		'croatia',
-		'cuba',
-		'curacao',
-		'cyprus',
-		'czechRepublic',
-		'demRepKorea',
-		'denmark',
-		'djibouti',
-		'dominica',
-		'dominicanRepublic',
-		'ecuador',
-		'egypt',
-		'elSalvador',
-		'equatorialGuinea',
-		'eritrea',
-		'estonia',
-		'ethiopia',
-		'faeroeIslands',
-		'falklandIslands',
-		'federatedStatesOfMicronesia',
-		'fiji',
-		'finland',
-		'france',
-		'frenchGuiana',
-		'frenchPolynesia',
-		'gabon',
-		'gambia',
-		'georgia',
-		'germany',
-		'ghana',
-		'greece',
-		'greenland',
-		'grenada',
-		'guadeloupe',
-		'guam',
-		'guatemala',
-		'guinea',
-		'guineaBissau',
-		'guyana',
-		'haiti',
-		'honduras',
-		'hungary',
-		'iceland',
-		'india',
-		'indonesia',
-		'iran',
-		'iraq',
-		'ireland',
-		'israel',
-		'italy',
-		'jamaica',
-		'japan',
-		'jordan',
-		'kazakhstan',
-		'kenya',
-		'kosovo',
-		'kuwait',
-		'kyrgyzstan',
-		'laoPDR',
-		'latvia',
-		'lebanon',
-		'lesotho',
-		'liberia',
-		'libya',
-		'lithuania',
-		'luxembourg',
-		'macedonia',
-		'madagascar',
-		'malawi',
-		'malaysia',
-		'maldives',
-		'mali',
-		'malta',
-		'marshallIslands',
-		'martinique',
-		'mauritania',
-		'mauritius',
-		'mayotte',
-		'mexico',
-		'moldova',
-		'mongolia',
-		'montenegro',
-		'montserrat',
-		'morocco',
-		'mozambique',
-		'myanmar',
-		'namibia',
-		'nauru',
-		'nepal',
-		'netherlands',
-		'newCaledonia',
-		'newZealand',
-		'nicaragua',
-		'niger',
-		'nigeria',
-		'northernMarianaIslands',
-		'norway',
-		'oman',
-		'pakistan',
-		'palau',
-		'palestine',
-		'panama',
-		'papuaNewGuinea',
-		'paraguay',
-		'peru',
-		'philippines',
-		'poland',
-		'portugal',
-		'puertoRico',
-		'qatar',
-		'republicOfKorea',
-		'reunion',
-		'romania',
-		'russia',
-		'rwanda',
-		'sabaNetherlands',
-		'saintBarthelemy',
-		'saintKittsAndNevis',
-		'saintLucia',
-		'saintMartin',
-		'saintVincentAndTheGrenadines',
-		'samoa',
-		'saudiArabia',
-		'senegal',
-		'serbia',
-		'seychelles',
-		'sierraLeone',
-		'sintMaarten',
-		'slovakia',
-		'slovenia',
-		'solomonIslands',
-		'somalia',
-		'southAfrica',
-		'southSudan',
-		'spain',
-		'sriLanka',
-		'stEustatiusNetherlands',
-		'sudan',
-		'suriname',
-		'swaziland',
-		'sweden',
-		'switzerland',
-		'syria',
-		'saoTomeAndPrincipe',
-		'taiwan',
-		'tajikistan',
-		'tanzania',
-		'thailand',
-		'timorLeste',
-		'togo',
-		'tonga',
-		'trinidadAndTobago',
-		'tunisia',
-		'turkey',
-		'turkmenistan',
-		'turksaAndCaicosIslands',
-		'tuvalu',
-		'uganda',
-		'ukraine',
-		'unitedArabEmirates',
-		'unitedKingdom',
-		'unitedStates',
-		'unitedStatesVirginIslands',
-		'uruguay',
-		'uzbekistan',
-		'vanuatu',
-		'venezuela',
-		'vietnam',
-		'westernSahara',
-		'yemen',
-		'zambia',
-		'zimbabwe',
-	]
-
-	function assingColorCode(value, stepValue) {
-		if (value === 0) return '#ffffff'
-		else if (value <= stepValue) return '#ccedff'
-		else if (value <= stepValue * 2) return '#80d2ff'
-		else if (value <= stepValue * 3) return '#1aafff'
-		else if (value <= stepValue * 4) return '#0074b3'
-		else return '#004266'
+	const camelDict = {
+		Albania: 'albania',
+		Algeria: 'algeria',
+		'American Samoa': 'americanSamoa',
+		Angola: 'angola',
+		Anguilla: 'anguilla',
+		'Antigua and Barbuda': 'antiguaAndBarbuda',
+		Argentina: 'argentina',
+		Armenia: 'armenia',
+		Aruba: 'aruba',
+		Australia: 'australia',
+		Austria: 'austria',
+		Azerbaijan: 'azerbaijan',
+		Bahamas: 'bahamas',
+		Bahrain: 'bahrain',
+		Bangladesh: 'bangladesh',
+		Barbados: 'barbados',
+		Belarus: 'belarus',
+		Belgium: 'belgium',
+		Belize: 'belize',
+		Benin: 'benin',
+		Bermuda: 'bermuda',
+		Bhutan: 'bhutan',
+		Bolivia: 'bolivia',
+		'Bosnia and Herzegovina': 'bosniaAndHerzegovina',
+		Botswana: 'botswana',
+		Brazil: 'brazil',
+		'British Virgin Islands': 'britishVirginIslands',
+		'Brunei Darussalam': 'bruneiDarussalam',
+		Bulgaria: 'bulgaria',
+		'Burkina Faso': 'burkinaFaso',
+		Burundi: 'burundi',
+		Cambodia: 'cambodia',
+		Cameroon: 'cameroon',
+		Canada: 'canada',
+		'Cape Verde': 'capeVerde',
+		'Cayman Islands': 'caymanIslands',
+		'Central African Republic': 'centralAfricanRepublic',
+		Chad: 'chad',
+		Chile: 'chile',
+		China: 'china',
+		Colombia: 'colombia',
+		Comoros: 'comoros',
+		Congo: 'congo',
+		'Costa Rica': 'costaRica',
+		Croatia: 'croatia',
+		Cuba: 'cuba',
+		Curaçao: 'curacao',
+		Cyprus: 'cyprus',
+		'Czech Republic': 'czechRepublic',
+		'Dem. Rep. Korea': 'demRepKorea',
+		Denmark: 'denmark',
+		Djibouti: 'djibouti',
+		Dominica: 'dominica',
+		'Dominican Republic': 'dominicanRepublic',
+		Ecuador: 'ecuador',
+		Egypt: 'egypt',
+		'El Salvador': 'elSalvador',
+		'Equatorial Guinea': 'equatorialGuinea',
+		Eritrea: 'eritrea',
+		Estonia: 'estonia',
+		Ethiopia: 'ethiopia',
+		'Faeroe Islands': 'faeroeIslands',
+		'Falkland Islands': 'falklandIslands',
+		'Federated States of Micronesia': 'federatedStatesOfMicronesia',
+		Fiji: 'fiji',
+		Finland: 'finland',
+		France: 'france',
+		'French Guiana': 'frenchGuiana',
+		'French Polynesia': 'frenchPolynesia',
+		Gabon: 'gabon',
+		Gambia: 'gambia',
+		Georgia: 'georgia',
+		Germany: 'germany',
+		Ghana: 'ghana',
+		Greece: 'greece',
+		Greenland: 'greenland',
+		Grenada: 'grenada',
+		Guadeloupe: 'guadeloupe',
+		Guam: 'guam',
+		Guatemala: 'guatemala',
+		Guinea: 'guinea',
+		'Guinea-Bissau': 'guineaBissau',
+		Guyana: 'guyana',
+		Haiti: 'haiti',
+		Honduras: 'honduras',
+		Hungary: 'hungary',
+		Iceland: 'iceland',
+		India: 'india',
+		Indonesia: 'indonesia',
+		Iran: 'iran',
+		Iraq: 'iraq',
+		Ireland: 'ireland',
+		Israel: 'israel',
+		Italy: 'italy',
+		Jamaica: 'jamaica',
+		Japan: 'japan',
+		Jordan: 'jordan',
+		Kazakhstan: 'kazakhstan',
+		Kenya: 'kenya',
+		Kuwait: 'kuwait',
+		Kyrgyzstan: 'kyrgyzstan',
+		'Lao PDR': 'laoPDR',
+		Latvia: 'latvia',
+		Lebanon: 'lebanon',
+		Lesotho: 'lesotho',
+		Liberia: 'liberia',
+		Libya: 'libya',
+		Lithuania: 'lithuania',
+		Luxembourg: 'luxembourg',
+		Macedonia: 'macedonia',
+		Madagascar: 'madagascar',
+		Malawi: 'malawi',
+		Malaysia: 'malaysia',
+		Maldives: 'maldives',
+		Mali: 'mali',
+		Malta: 'malta',
+		'Marshall Islands': 'marshallIslands',
+		Martinique: 'martinique',
+		Mauritania: 'mauritania',
+		Mauritius: 'mauritius',
+		Mayotte: 'mayotte',
+		Mexico: 'mexico',
+		Moldova: 'moldova',
+		Mongolia: 'mongolia',
+		Montenegro: 'montenegro',
+		Montserrat: 'montserrat',
+		Morocco: 'morocco',
+		Mozambique: 'mozambique',
+		Myanmar: 'myanmar',
+		Namibia: 'namibia',
+		Nauru: 'nauru',
+		Nepal: 'nepal',
+		Netherlands: 'netherlands',
+		'New Caledonia': 'newCaledonia',
+		'New Zealand': 'newZealand',
+		Nicaragua: 'nicaragua',
+		Niger: 'niger',
+		Nigeria: 'nigeria',
+		'Northern Mariana Islands': 'northernMarianaIslands',
+		Norway: 'norway',
+		Oman: 'oman',
+		Pakistan: 'pakistan',
+		Palau: 'palau',
+		Palestine: 'palestine',
+		Panama: 'panama',
+		'Papua New Guinea': 'papuaNewGuinea',
+		Paraguay: 'paraguay',
+		Peru: 'peru',
+		Philippines: 'philippines',
+		Poland: 'poland',
+		Portugal: 'portugal',
+		'Puerto Rico': 'puertoRico',
+		Qatar: 'qatar',
+		'Republic of Korea': 'republicOfKorea',
+		Reunion: 'reunion',
+		Romania: 'romania',
+		Russia: 'russia',
+		Rwanda: 'rwanda',
+		'Saint Kitts and Nevis': 'saintKittsAndNevis',
+		'Saint Lucia': 'saintLucia',
+		'Saint Vincent and the Grenadines': 'saintVincentAndTheGrenadines',
+		'Saint-Barthélemy': 'saintBarthelemy',
+		'Saint-Martin': 'saintMartin',
+		Samoa: 'samoa',
+		'São Tomé and Principe': 'saoTomeAndPrincipe',
+		'Saudi Arabia': 'saudiArabia',
+		Senegal: 'senegal',
+		Serbia: 'serbia',
+		Seychelles: 'seychelles',
+		'Sierra Leone': 'sierraLeone',
+		'Sint Maarten': 'sintMaarten',
+		Slovakia: 'slovakia',
+		Slovenia: 'slovenia',
+		'Solomon Islands': 'solomonIslands',
+		Somalia: 'somalia',
+		'South Africa': 'southAfrica',
+		Spain: 'spain',
+		'Sri Lanka': 'sriLanka',
+		'St. Eustatius And Saba (Netherlands)': 'sabaNetherlands',
+		Sudan: 'sudan',
+		Suriname: 'suriname',
+		Swaziland: 'swaziland',
+		Sweden: 'sweden',
+		Switzerland: 'switzerland',
+		Syria: 'syria',
+		Taiwan: 'taiwan',
+		Tajikistan: 'tajikistan',
+		Tanzania: 'tanzania',
+		Thailand: 'thailand',
+		'Timor-Leste': 'timorLeste',
+		Togo: 'togo',
+		Tonga: 'tonga',
+		'Trinidad and Tobago': 'trinidadAndTobago',
+		Tunisia: 'tunisia',
+		Turkey: 'turkey',
+		Turkmenistan: 'turkmenistan',
+		'Turks and Caicos Islands': 'turksaAndCaicosIslands',
+		Tuvalu: 'tuvalu',
+		Uganda: 'uganda',
+		Ukraine: 'ukraine',
+		'United Arab Emirates': 'unitedArabEmirates',
+		'United Kingdom': 'unitedKingdom',
+		'United States': 'unitedStates',
+		'United States Virgin Islands': 'unitedStatesVirginIslands',
+		Uruguay: 'uruguay',
+		Uzbekistan: 'uzbekistan',
+		Vanuatu: 'vanuatu',
+		Venezuela: 'venezuela',
+		Vietnam: 'vietnam',
+		'Western Sahara': 'westernSahara',
+		Yemen: 'yemen',
+		Zambia: 'zambia',
+		Zimbabwe: 'zimbabwe',
 	}
+
 	function handleChecboxChange(data, filterTitle) {
 		setFilters({
 			...filters,
@@ -357,51 +274,9 @@ const WorldMapScreen = ({ onScroll }) => {
 			},
 		})
 	}
-	function convertArrayToGraph(data) {
-		const graph = {
-			nodes: [],
-			edges: [],
-		}
-
-		// Create unique node IDs for reporter and reported entities
-		const allEntities = new Set()
-		data.forEach((item) => {
-			allEntities.add(item.reporter)
-			allEntities.add(item.reported)
-		})
-
-		for (const entity of allEntities) {
-			graph.nodes.push({
-				id: entity,
-				label: entity,
-				title: entity,
-				shape: 'circle',
-			})
-		}
-		data.forEach((item) => {
-			const index = graph.edges.findIndex((edge) => {
-				return edge.from === item.reporter && edge.to === item.reported
-			})
-			if (index === -1) {
-				graph.edges.push({
-					from: item.reporter,
-					to: item.reported,
-					weight: 1,
-				})
-			} else {
-				graph.edges[index].weight += 1
-			}
-		})
-		return graph
-	}
 	function handleDataFilter(data, filters) {
-		const countryDict = countryList.reduce((acc, item) => {
-			acc[item] = 0
-			return acc
-		}, {})
-		console.log('data:', data)
 		let filteredData = data
-
+		// filter data based on selected filters
 		if (filters.hasOwnProperty('interactionType')) {
 			filteredData = filteredData.filter((item) => {
 				return filters['interactionType'].includes(item['interactionType'])
@@ -432,26 +307,7 @@ const WorldMapScreen = ({ onScroll }) => {
 				return item['reporter'] === filters['reporterCountry']
 			})
 		}
-		const graphData = convertArrayToGraph(filteredData)
-		for (const country of filteredData) {
-			countryDict[country.reporter] += 1
-			countryDict[country.reported] += 1
-		}
-		const sortedDict = Object.fromEntries(
-			Object.entries(countryDict).sort(([, a], [, b]) => b - a)
-		)
-		const maxValue = Object.values(sortedDict)[0]
-		const stepValue = Math.floor(maxValue / 4)
-		const colorDict = {}
-
-		Object.keys(sortedDict).forEach((key) => {
-			const value = sortedDict[key]
-			colorDict[key] = assingColorCode(value, stepValue)
-		})
-		if (filters.hasOwnProperty('reporterCountry')) {
-			colorDict[filters['reporterCountry']] = 'red'
-		}
-		return { colorData: colorDict, graphData: graphData }
+		return filteredData
 	}
 	function handleFilterSelection() {
 		let formattedFilters = {}
@@ -486,23 +342,21 @@ const WorldMapScreen = ({ onScroll }) => {
 		}
 	}
 	useEffect(() => {
-		const fetchColors = async () => {
+		const fetchData = async () => {
 			setLoading(true)
 			try {
 				const response = await fetch('/api/countries')
 				const jsonData = await response.json()
 				setOriginalData(jsonData)
 				const filteredData = handleDataFilter(jsonData, {})
-				console.log({ filter: filteredData })
-				setColors(filteredData.colorData)
-				setGraph(filteredData.graphData)
+				setFilteredData(filteredData)
 				setLoading(false)
 			} catch (error) {
 				console.error('Error fetching data:', error)
 			}
 		}
 
-		fetchColors()
+		fetchData()
 	}, [])
 	return (
 		<SidebarPushable>
@@ -532,24 +386,18 @@ const WorldMapScreen = ({ onScroll }) => {
 					<AccordionContent active={reporterFilter['show']}>
 						<Segment className={styles.reporterCountry}>
 							<Form>
-								{countryList.map((country) => {
-									const formattedCountry = country
-										.replace(/([a-z])([A-Z])/g, '$1 $2')
-										.replace(/\b\w/g, function (char) {
-											return char.toUpperCase()
-										})
+								{Object.entries(camelDict).map((country) => {
 									return (
-										<FormField key={country}>
+										<FormField key={country[1]}>
 											<Radio
 												label={
 													<label>
-														<CountryFlag name={formattedCountry} />{' '}
-														{formattedCountry}
+														<CountryFlag name={country[0]} /> {country[0]}
 													</label>
 												}
 												name='reporterCountryFilterRadio'
-												value={country}
-												checked={reporterFilter['value'] === country}
+												value={country[1]}
+												checked={reporterFilter['value'] === country[1]}
 												onChange={(e, data) =>
 													setReporterFilter({
 														show: reporterFilter['show'],
@@ -809,8 +657,7 @@ const WorldMapScreen = ({ onScroll }) => {
 					onClick={() => {
 						const filters = handleFilterSelection()
 						const filteredData = handleDataFilter(originalData, filters)
-						setColors(filteredData.colorData)
-						setGraph(filteredData.graphData)
+						setFilteredData(filteredData)
 					}}
 				>
 					Filter
@@ -831,12 +678,12 @@ const WorldMapScreen = ({ onScroll }) => {
 						<div>Loading...</div>
 					) : display == 'cartography' ? (
 						<div className={styles.mapContainer}>
-							<WorldMapSvg
+							<InteractionCartography
 								onPathHover={setCountry}
 								onPathClick={() => {
 									setModalOpen(true)
 								}}
-								colors={colors}
+								cartographyData={filteredData}
 							/>
 							<CountryDataModal
 								country={handleCountryDataSelection(originalData, country)}
@@ -847,7 +694,7 @@ const WorldMapScreen = ({ onScroll }) => {
 						</div>
 					) : (
 						<div className={styles.mapContainer}>
-							<InteractionNetwork graphData={graph} />
+							<InteractionNetwork networkData={filteredData} />
 						</div>
 					)}
 

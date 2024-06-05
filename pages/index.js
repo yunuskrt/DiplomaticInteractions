@@ -8,12 +8,6 @@ const scrollToWorldMapSection = () => {
 		section.scrollIntoView({ behavior: 'smooth' })
 	}
 }
-const scrollToNetworkSection = () => {
-	const section = document.getElementById('networkSection')
-	if (section) {
-		section.scrollIntoView({ behavior: 'smooth' })
-	}
-}
 const Home = () => {
 	useEffect(() => {
 		const handleScroll = () => {
@@ -38,7 +32,7 @@ const Home = () => {
 			</div>
 
 			<div id='mapSection'>
-				<WorldMapScreen onScroll={scrollToNetworkSection} />
+				<WorldMapScreen />
 			</div>
 		</div>
 	)

@@ -1,14 +1,277 @@
-import React from 'react'
-import styles from './worldMapSvg.module.css'
+import React, { useState, useEffect } from 'react'
+import styles from './interactionCartography.module.css'
 
-const WorldMapSvg = ({ onPathHover, onPathClick, colors }) => {
+const InteractionCartography = ({
+	onPathHover = () => {},
+	onPathClick = () => {},
+	cartographyData,
+}) => {
+	const countryList = [
+		'albania',
+		'algeria',
+		'americanSamoa',
+		'angola',
+		'anguilla',
+		'antiguaAndBarbuda',
+		'argentina',
+		'armenia',
+		'aruba',
+		'australia',
+		'austria',
+		'azerbaijan',
+		'bahamas',
+		'bahrain',
+		'bangladesh',
+		'barbados',
+		'belarus',
+		'belgium',
+		'belize',
+		'benin',
+		'bermuda',
+		'bhutan',
+		'bolivia',
+		'bosniaAndHerzegovina',
+		'botswana',
+		'brazil',
+		'britishVirginIslands',
+		'bruneiDarussalam',
+		'bulgaria',
+		'burkinaFaso',
+		'burundi',
+		'cambodia',
+		'cameroon',
+		'canada',
+		'canaryIslandsSpain',
+		'capeVerde',
+		'caymanIslands',
+		'centralAfricanRepublic',
+		'chad',
+		'chile',
+		'china',
+		'colombia',
+		'comoros',
+		'congo',
+		'costaRica',
+		'coteDIvoire',
+		'croatia',
+		'cuba',
+		'curacao',
+		'cyprus',
+		'czechRepublic',
+		'demRepKorea',
+		'denmark',
+		'djibouti',
+		'dominica',
+		'dominicanRepublic',
+		'ecuador',
+		'egypt',
+		'elSalvador',
+		'equatorialGuinea',
+		'eritrea',
+		'estonia',
+		'ethiopia',
+		'faeroeIslands',
+		'falklandIslands',
+		'federatedStatesOfMicronesia',
+		'fiji',
+		'finland',
+		'france',
+		'frenchGuiana',
+		'frenchPolynesia',
+		'gabon',
+		'gambia',
+		'georgia',
+		'germany',
+		'ghana',
+		'greece',
+		'greenland',
+		'grenada',
+		'guadeloupe',
+		'guam',
+		'guatemala',
+		'guinea',
+		'guineaBissau',
+		'guyana',
+		'haiti',
+		'honduras',
+		'hungary',
+		'iceland',
+		'india',
+		'indonesia',
+		'iran',
+		'iraq',
+		'ireland',
+		'israel',
+		'italy',
+		'jamaica',
+		'japan',
+		'jordan',
+		'kazakhstan',
+		'kenya',
+		'kosovo',
+		'kuwait',
+		'kyrgyzstan',
+		'laoPDR',
+		'latvia',
+		'lebanon',
+		'lesotho',
+		'liberia',
+		'libya',
+		'lithuania',
+		'luxembourg',
+		'macedonia',
+		'madagascar',
+		'malawi',
+		'malaysia',
+		'maldives',
+		'mali',
+		'malta',
+		'marshallIslands',
+		'martinique',
+		'mauritania',
+		'mauritius',
+		'mayotte',
+		'mexico',
+		'moldova',
+		'mongolia',
+		'montenegro',
+		'montserrat',
+		'morocco',
+		'mozambique',
+		'myanmar',
+		'namibia',
+		'nauru',
+		'nepal',
+		'netherlands',
+		'newCaledonia',
+		'newZealand',
+		'nicaragua',
+		'niger',
+		'nigeria',
+		'northernMarianaIslands',
+		'norway',
+		'oman',
+		'pakistan',
+		'palau',
+		'palestine',
+		'panama',
+		'papuaNewGuinea',
+		'paraguay',
+		'peru',
+		'philippines',
+		'poland',
+		'portugal',
+		'puertoRico',
+		'qatar',
+		'republicOfKorea',
+		'reunion',
+		'romania',
+		'russia',
+		'rwanda',
+		'sabaNetherlands',
+		'saintBarthelemy',
+		'saintKittsAndNevis',
+		'saintLucia',
+		'saintMartin',
+		'saintVincentAndTheGrenadines',
+		'samoa',
+		'saudiArabia',
+		'senegal',
+		'serbia',
+		'seychelles',
+		'sierraLeone',
+		'sintMaarten',
+		'slovakia',
+		'slovenia',
+		'solomonIslands',
+		'somalia',
+		'southAfrica',
+		'southSudan',
+		'spain',
+		'sriLanka',
+		'stEustatiusNetherlands',
+		'sudan',
+		'suriname',
+		'swaziland',
+		'sweden',
+		'switzerland',
+		'syria',
+		'saoTomeAndPrincipe',
+		'taiwan',
+		'tajikistan',
+		'tanzania',
+		'thailand',
+		'timorLeste',
+		'togo',
+		'tonga',
+		'trinidadAndTobago',
+		'tunisia',
+		'turkey',
+		'turkmenistan',
+		'turksaAndCaicosIslands',
+		'tuvalu',
+		'uganda',
+		'ukraine',
+		'unitedArabEmirates',
+		'unitedKingdom',
+		'unitedStates',
+		'unitedStatesVirginIslands',
+		'uruguay',
+		'uzbekistan',
+		'vanuatu',
+		'venezuela',
+		'vietnam',
+		'westernSahara',
+		'yemen',
+		'zambia',
+		'zimbabwe',
+	]
+	function assingColorCode(value, stepValue) {
+		if (value === 0) return '#ffffff'
+		else if (value <= stepValue) return '#ccedff'
+		else if (value <= stepValue * 2) return '#80d2ff'
+		else if (value <= stepValue * 3) return '#1aafff'
+		else if (value <= stepValue * 4) return '#0074b3'
+		else return '#004266'
+	}
+	function convertDataToColorDict(data, filters) {
+		const countryDict = countryList.reduce((acc, item) => {
+			acc[item] = 0
+			return acc
+		}, {})
+		for (const country of data) {
+			countryDict[country.reporter] += 1
+			countryDict[country.reported] += 1
+		}
+		const sortedDict = Object.fromEntries(
+			Object.entries(countryDict).sort(([, a], [, b]) => b - a)
+		)
+		const maxValue = Object.values(sortedDict)[0]
+		const stepValue = Math.floor(maxValue / 4)
+		const colorDict = {}
+
+		Object.keys(sortedDict).forEach((key) => {
+			const value = sortedDict[key]
+			colorDict[key] = assingColorCode(value, stepValue)
+		})
+		// if (filters.hasOwnProperty('reporterCountry')) {
+		// 	colorDict[filters['reporterCountry']] = 'red'
+		// }
+		return colorDict
+	}
+	const [colors, setColors] = useState({})
+	const [isClient, setIsClient] = useState(false)
+	useEffect(() => {
+		setIsClient(true)
+		setColors(convertDataToColorDict(cartographyData))
+	}, [cartographyData])
 	return (
 		<div>
 			<svg
 				baseProfile='tiny'
 				fill='#ededed'
 				height='857'
-				stroke='#fff'
+				stroke='#d4d4d4'
 				strokeLinecap='round'
 				strokeLinejoin='round'
 				strokeWidth='.6'
@@ -4244,4 +4507,4 @@ const WorldMapSvg = ({ onPathHover, onPathClick, colors }) => {
 	)
 }
 
-export default WorldMapSvg
+export default InteractionCartography

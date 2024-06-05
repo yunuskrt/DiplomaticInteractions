@@ -1,5 +1,6 @@
 export default function handler(req, res) {
 	const method = req.method
+	const countryCode = req.query.countryCode
 	switch (method) {
 		case 'GET':
 			try {
@@ -9905,7 +9906,16 @@ export default function handler(req, res) {
 						date: '07.10.1992',
 					},
 				]
-				res.status(200).json(interactionData)
+				const countryData = interactionData.filter(
+					(country) =>
+						country.reporterId === countryCode.toUpperCase() ||
+						country.reportedId === countryCode.toUpperCase()
+				)
+				if (countryData.length > 0) {
+					res.status(200).json(countryData)
+				} else {
+					res.status(404).json(null)
+				}
 				break
 			} catch (error) {
 				res.status(500).json({ message: error.message })
