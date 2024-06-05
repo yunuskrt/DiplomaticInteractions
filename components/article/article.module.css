@@ -1,0 +1,16 @@
+.articleCard{
+    width: 90% !important;
+}
+.articleContent{
+    display: flex; 
+    flex-direction: column; 
+    gap: 5px;
+}
+.articleDate{
+    font-weight: bold;
+}
+.extraContent{
+    display: flex; 
+    flex-direction: column; 
+    gap: 3px;
+}

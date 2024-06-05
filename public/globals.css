@@ -1,13 +1,5 @@
 body {
-  /* background: url('./images/background.png')!important;
-    background-size: cover !important;
-    background-attachment: fixed !important;
-    background-repeat: no-repeat !important; */
   background-color: #f2f0f0 !important;
-}
-
-.ui.card>.content>.header {
-  color: #fff !important;
 }
 
 * {
