@@ -310,7 +310,10 @@ const CountryInteraction = ({ data }) => {
 						<Label as='div' color='teal' ribbon size='medium'>
 							Cartography Visualization
 						</Label>
-						<InteractionCartography cartographyData={interactionData} />
+						<InteractionCartography
+							cartographyData={interactionData}
+							countries={[countryName]}
+						/>
 					</Segment>
 				)}
 			</div>

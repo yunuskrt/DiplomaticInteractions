@@ -28,6 +28,7 @@ const WorldMapScreen = () => {
 		conversationType: { show: false, subFilters: [] },
 		topic: { show: false, subFilters: [] },
 		year: { show: false, subFilters: [] },
+		reporter: { show: false, subFilters: [] },
 	})
 	const [reporterFilter, setReporterFilter] = useState({
 		show: false,
@@ -302,9 +303,9 @@ const WorldMapScreen = () => {
 				return new Date(item['date']) <= new Date(filters['endDate'])
 			})
 		}
-		if (filters.hasOwnProperty('reporterCountry')) {
+		if (filters.hasOwnProperty('reporter')) {
 			filteredData = filteredData.filter((item) => {
-				return item['reporter'] === filters['reporterCountry']
+				return filters['reporter'].includes(item['reporter'])
 			})
 		}
 		return filteredData
@@ -371,38 +372,37 @@ const WorldMapScreen = () => {
 				<h2>Filter By</h2>
 				<Accordion fluid exclusive={false}>
 					<AccordionTitle
-						active={reporterFilter['show']}
+						active={filters['reporter']['show']}
 						index={0}
 						onClick={() => {
-							setReporterFilter({
-								show: !reporterFilter['show'],
-								value: reporterFilter['value'],
+							setFilters({
+								...filters,
+								reporter: {
+									show: !filters['reporter']['show'],
+									subFilters: filters['reporter']['subFilters'],
+								},
 							})
 						}}
 					>
 						<Icon name='dropdown' />
 						Reporter Country
 					</AccordionTitle>
-					<AccordionContent active={reporterFilter['show']}>
+					<AccordionContent active={filters['reporter']['show']}>
 						<Segment className={styles.reporterCountry}>
 							<Form>
 								{Object.entries(camelDict).map((country) => {
 									return (
 										<FormField key={country[1]}>
-											<Radio
+											<Checkbox
 												label={
 													<label>
 														<CountryFlag name={country[0]} /> {country[0]}
 													</label>
 												}
-												name='reporterCountryFilterRadio'
+												name='reporterCountryFilterCheckbox'
 												value={country[1]}
-												checked={reporterFilter['value'] === country[1]}
 												onChange={(e, data) =>
-													setReporterFilter({
-														show: reporterFilter['show'],
-														value: data.value,
-													})
+													handleChecboxChange(data, 'reporter')
 												}
 											/>
 										</FormField>
@@ -684,6 +684,7 @@ const WorldMapScreen = () => {
 									setModalOpen(true)
 								}}
 								cartographyData={filteredData}
+								countries={filters.reporter.subFilters}
 							/>
 							<CountryDataModal
 								country={handleCountryDataSelection(originalData, country)}
@@ -699,7 +700,7 @@ const WorldMapScreen = () => {
 					)}
 
 					<div className={styles.bottomContainer}>
-						<div>
+						<Segment raised className={styles.visFilter}>
 							<Form>
 								<FormField>
 									<Checkbox
@@ -722,7 +723,7 @@ const WorldMapScreen = () => {
 									/>
 								</FormField>
 							</Form>
-						</div>
+						</Segment>
 					</div>
 				</div>
 			</SidebarPusher>

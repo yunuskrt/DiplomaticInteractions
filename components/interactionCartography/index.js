@@ -5,6 +5,7 @@ const InteractionCartography = ({
 	onPathHover = () => {},
 	onPathClick = () => {},
 	cartographyData,
+	countries = [],
 }) => {
 	const countryList = [
 		'albania',
@@ -263,7 +264,13 @@ const InteractionCartography = ({
 	const [isClient, setIsClient] = useState(false)
 	useEffect(() => {
 		setIsClient(true)
-		setColors(convertDataToColorDict(cartographyData))
+		let colorDict = convertDataToColorDict(cartographyData)
+		countries.forEach((country) => {
+			if (country in colorDict) {
+				colorDict[country] = 'red'
+			}
+		})
+		setColors(colorDict)
 	}, [cartographyData])
 	return (
 		<div>

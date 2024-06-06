@@ -33,6 +33,11 @@
     gap: 5px;
 }
 
+.modalContent {
+    max-height: 550px;
+    overflow: scroll;
+}
+
 .boldTitle {
     font-weight: bold;
 }
