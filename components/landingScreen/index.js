@@ -7,7 +7,7 @@ import styles from './landingScreen.module.css'
 const LandingScreen = ({ onScroll }) => {
 	return (
 		<Grid>
-			<Grid.Row style={{ height: '70vh' }}>
+			<Grid.Row className={styles.headerRow}>
 				<Grid.Column width={10} textAlign='center' verticalAlign='middle'>
 					<div className={styles.landingText}>
 						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec justo
@@ -20,25 +20,9 @@ const LandingScreen = ({ onScroll }) => {
 				</Grid.Column>
 			</Grid.Row>
 
-			<Grid.Row
-				style={{
-					height: '15vh',
-				}}
-			>
-				<Grid.Column
-					width={16}
-					style={{
-						display: 'flex',
-						justifyContent: 'center',
-					}}
-				>
-					<div
-						style={{
-							width: '80%',
-							height: '100%',
-							display: 'flex',
-						}}
-					>
+			<Grid.Row className={styles.infoRow}>
+				<Grid.Column width={16} className={styles.iconsContainer}>
+					<div className={styles.iconsWrapper}>
 						<LandingIcon
 							icon='flag'
 							desc='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse viverra.'
@@ -59,7 +43,7 @@ const LandingScreen = ({ onScroll }) => {
 				</Grid.Column>
 			</Grid.Row>
 
-			<Grid.Row style={{ height: '10vh' }}>
+			<Grid.Row className={styles.scrolRow}>
 				<Grid.Column width={16} textAlign='center' verticalAlign='top'>
 					<Icon
 						name='angle double down'

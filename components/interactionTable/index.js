@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import {
 	TableRow,
 	TableHeaderCell,
@@ -227,9 +227,6 @@ const invertedCodeDict = {
 	ZW: 'Zimbabwe',
 }
 const InteractionTable = ({ tableData }) => {
-	useEffect(() => {
-		console.log({ tableData: tableData })
-	}, [])
 	return (
 		<Segment className={styles.countryTableSegment}>
 			<Table celled inverted selectable>

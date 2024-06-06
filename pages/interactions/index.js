@@ -10,6 +10,7 @@ import {
 	Legend,
 } from 'chart.js'
 import { Bar } from 'react-chartjs-2'
+import styles from './interactions.module.css'
 
 const countryOptions = [
 	{
@@ -1363,15 +1364,7 @@ const Interactions = () => {
 
 	return (
 		<div>
-			<Segment
-				raised
-				style={{
-					display: 'flex',
-					gap: '20px',
-					width: '95%',
-					margin: 'auto',
-				}}
-			>
+			<Segment raised className={styles.filterSegment}>
 				<Dropdown
 					clearable
 					fluid
@@ -1391,7 +1384,6 @@ const Interactions = () => {
 									`/api/interaction?reporter=${data.value}&reported=${countryFilters.reported}`
 								)
 								const jsonData = await response.json()
-								console.log(jsonData)
 								setBarData(convertDataToBar(jsonData))
 							} catch (error) {
 								console.error('Error fetching data:', error)
@@ -1419,7 +1411,6 @@ const Interactions = () => {
 									`/api/interaction?reporter=${countryFilters.reporter}&reported=${data.value}`
 								)
 								const jsonData = await response.json()
-								console.log(jsonData)
 								setBarData(convertDataToBar(jsonData))
 							} catch (error) {
 								console.error('Error fetching data:', error)

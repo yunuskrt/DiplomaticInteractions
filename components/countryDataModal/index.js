@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import styles from './countryDataModal.module.css'
 import {
 	Icon,
@@ -255,9 +255,6 @@ const CountryDataModal = ({
 			date: capitalized(data.date),
 		}
 	})
-	useEffect(() => {
-		console.log('Country Data Modal Mounted', country)
-	}, [])
 	return (
 		<>
 			{country.title !== '' && (

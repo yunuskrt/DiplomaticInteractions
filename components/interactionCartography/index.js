@@ -255,9 +255,6 @@ const InteractionCartography = ({
 			const value = sortedDict[key]
 			colorDict[key] = assingColorCode(value, stepValue)
 		})
-		// if (filters.hasOwnProperty('reporterCountry')) {
-		// 	colorDict[filters['reporterCountry']] = 'red'
-		// }
 		return colorDict
 	}
 	const [colors, setColors] = useState({})

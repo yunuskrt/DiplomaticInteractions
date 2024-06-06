@@ -263,15 +263,7 @@ const CountryInteraction = ({ data }) => {
 	}
 	return (
 		<div>
-			<Segment
-				raised
-				style={{
-					display: 'flex',
-					gap: '20px',
-					width: '95%',
-					margin: 'auto',
-				}}
-			>
+			<Segment raised className={styles.filterSegment}>
 				<Dropdown
 					placeholder='Visualize With'
 					fluid
