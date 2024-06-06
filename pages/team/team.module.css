@@ -1,0 +1,28 @@
+.memberContainer {
+    padding: 50px;
+    background-color: rgb(4, 4, 4, 0.8);
+    width: 100%;
+    border-radius: 15px;
+}
+
+.memberRow{
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    align-items: center;
+}
+
+.separatorBig{
+    width: 50%;
+    height: 1px;
+    background-color: #fff;
+    margin: 0 10px 50px 10px;
+}
+
+.separatorSmall{
+    width: 25%;
+    height: 1px;
+    background-color: #fff;
+    margin: 0 10px 50px 10px;
+}

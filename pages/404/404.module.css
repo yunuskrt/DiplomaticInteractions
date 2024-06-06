@@ -1,0 +1,19 @@
+.notFoundContainer{
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.pointIcon{
+    font-size: 150px !important;
+}
+
+.messageContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+}

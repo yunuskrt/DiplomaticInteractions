@@ -1,0 +1,13 @@
+.landingText {
+    font-size: 42px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 0 5px #6682a9;
+    line-height: 50px;
+    padding: 3px;
+}
+.scrollIcon{
+    color:#6682a9;
+    cursor: pointer;
+    margin: 3px;
+}
